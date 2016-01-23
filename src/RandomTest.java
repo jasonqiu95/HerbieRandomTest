@@ -22,7 +22,8 @@ public class RandomTest {
 		}
 		System.out.println(")");
 		System.out.println("  \"Random test\"");
-		System.out.println("    " + opt.parse());
+		System.out.print("    " + opt.parse());
+		System.out.println(" )");
 	}
 
 }

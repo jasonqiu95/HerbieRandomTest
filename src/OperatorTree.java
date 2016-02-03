@@ -12,6 +12,7 @@ public class OperatorTree {
 	public final static Set<String> UNARY_OPERATORS = new HashSet<String>();
 	public final static Set<String> BINARY_OPERATORS = new HashSet<String>();
 	public final static Set<String> VARIABLES = new HashSet<String>();
+	public final static String ALPHABET = "abcdefghijklmnopqrstuvwxyz"; 
 	private Random r;
 	
 	static {
@@ -21,14 +22,16 @@ public class OperatorTree {
 		BINARY_OPERATORS.add("*");
 		UNARY_OPERATORS.add("log");
 		UNARY_OPERATORS.add("abs");
-		VARIABLES.add("x");
-		VARIABLES.add("y");
 	}
 	
 	// @param size number of nodes in the tree
-	public OperatorTree(int size) {
+	public OperatorTree(int size, int numOfVars) {
 		this.size = size;
 		r =  new Random();
+		
+		for (int i = 0; i < numOfVars; i++) {
+			VARIABLES.add(ALPHABET.charAt(i) + "");
+		}
 	}
 	
 	// constructs an empty tree where each node either has zero or two children

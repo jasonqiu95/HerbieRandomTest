@@ -3,8 +3,12 @@ public class RandomTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		OperatorTree opt = new OperatorTree(7);
-		printTest(opt, 5);
+		int treeSize = Integer.parseInt(args[0]);
+		int numOfVars = Integer.parseInt(args[1]);
+		int numOfTest = Integer.parseInt(args[2]);
+		
+		OperatorTree opt = new OperatorTree(treeSize, numOfVars);
+		printTest(opt, numOfTest);
 //		opt.preOrder();
 //		OperatorTree.printNode(opt.root);
 		
@@ -15,7 +19,7 @@ public class RandomTest {
 	}
 	
 	public static void printTest(OperatorTree opt, int n) {
-		for (int i  =0; i < n; i++) {
+		for (int i  = 0; i < n; i++) {
 			//initialize tree
 			opt.createEmpty();
 			opt.populate(opt.root);

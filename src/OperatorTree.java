@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -7,24 +8,27 @@ import java.util.Set;
 import java.util.Stack;
 
 public class OperatorTree {
-	private int size;  //number of operators or the height of the tree
+	private int size;  //number of nodes of the tree
 	public Node root;
 	public final static Set<String> UNARY_OPERATORS = new HashSet<String>();
 	public final static Set<String> BINARY_OPERATORS = new HashSet<String>();
 	public final static Set<String> VARIABLES = new HashSet<String>();
 	public final static String ALPHABET = "abcdefghijklmnopqrstuvwxyz"; 
 	private Random r;
+	public final static String[] UNARY = {"-","sqrt", "sqr", "exp", "log", "sin", 
+			"cos", "tan", "cotan", "asin", "acos", "atan", "sinh", "cosh", 
+			"tanh", "abs", "expm1", "log1p", ""};
+	public final static String[] BINARY = {"+", "-", "*", "/", "expt", "atan2", "mod", "hypot"};
 	
 	static {
-		BINARY_OPERATORS.add("+");
-		BINARY_OPERATORS.add("-");
-		BINARY_OPERATORS.add("/");
-		BINARY_OPERATORS.add("*");
-		UNARY_OPERATORS.add("log");
-		UNARY_OPERATORS.add("abs");
+		BINARY_OPERATORS.addAll(Arrays.asList(BINARY));
+		UNARY_OPERATORS.addAll(Arrays.asList(UNARY));
 	}
 	
-	// @param size number of nodes in the tree
+	/**
+	 * @param size size of the tree, which is also the number of nodes
+	 * @param numOfVars number of variables
+	 */
 	public OperatorTree(int size, int numOfVars) {
 		this.size = size;
 		r =  new Random();
@@ -34,34 +38,13 @@ public class OperatorTree {
 		}
 	}
 	
-	// constructs an empty tree where each node either has zero or two children
-//	public void createEmpty() {
-//		if (size < 0) {
-//			throw new IllegalArgumentException();
-//		}
-//		Node curr = root;
-//		for (int i = 0; i < size; i++) {
-//			curr.left = new Node();
-//			curr.right = new Node();
-//			int whichWay = r.nextInt(2);
-//			if (whichWay == 0) {		
-//				curr = curr.left;
-//			} else {
-//				curr = curr.right;
-//			}
-//		}
-//	}
-	
 	public void createEmpty() {
 		root = null;
 		if (this.size > 0) {
 			root = createEmptyHelper(root, size);
 		}
 	}
-	
-	// @param size size of the tree
-	// @param n current node
-	// @requires n = null
+
 	private Node createEmptyHelper(Node n, int size) {
 		if (size > 1) {
 			n = new Node();
@@ -172,8 +155,6 @@ public class OperatorTree {
 	
 	
 	// All code below are just printing functions.
-	
-	
 	public static void printNode(Node root) {
         int maxLevel = maxLevel(root);
 

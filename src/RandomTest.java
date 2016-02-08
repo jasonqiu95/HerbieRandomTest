@@ -3,6 +3,10 @@ public class RandomTest {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		if (args.length != 3) {
+			System.out.println("Use 'java RandomTest treeSize numOfVars numOfTest'");
+			System.exit(1);
+		}
 		int treeSize = Integer.parseInt(args[0]);
 		int numOfVars = Integer.parseInt(args[1]);
 		int numOfTest = Integer.parseInt(args[2]);

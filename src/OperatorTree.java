@@ -90,7 +90,7 @@ public class OperatorTree {
 			if (n.left == null && n.right == null) {
 				// leaf node
 				if (r.nextInt(2) == 0) {
-					n.data = Math.pow(-1, r.nextInt(2)) * r.nextDouble()* 1e23+"";
+					n.data = Math.pow(-1, r.nextInt(2)) * (r.nextDouble() + ((double)r.nextInt(100000000)))+"";
 				//	n.data = n.data.substring(0, 7);
 				} else {
 					String[] varArr = new String[VARIABLES.size()];

@@ -43,12 +43,12 @@ public class OperatorTree {
   private static String choose(String[] a) {
     return a[rnd.nextInt(a.length)];
   }
-  
+
   private static String getDoubleStr() {
-	  byte[] bytes = new byte[8];
-	  rnd.nextBytes(bytes);
-	  double val = ByteBuffer.wrap(bytes).getDouble();
-	  return Double.toString(val);
+    byte[] bytes = new byte[8];
+    rnd.nextBytes(bytes);
+    double val = ByteBuffer.wrap(bytes).getDouble();
+    return Double.toString(val);
   }
 
   private static int count = 0;
@@ -56,15 +56,17 @@ public class OperatorTree {
   private final String name;
   private final String[] vars;
   private final Node expr;
+  private final String[] dist;
 
-  public OperatorTree(int size, int nVars) {
+  public OperatorTree(int size, int nVars, String[] dist) {
     if(size < 1) throw new Error("size < 1");
     if(nVars > VARS.length) throw new Error("nVars > VARS.length");
 
     count++;
-    this.name = String.format("\"Random Jason Test %d\"", count);
+    this.name = String.format("\"Random Jason Test %03d\"", count);
     this.vars = Arrays.copyOf(VARS, nVars);
     this.expr = genExpr(size);
+    this.dist = dist;
   }
 
   private Node genExpr(int fuel) {
@@ -72,7 +74,7 @@ public class OperatorTree {
 
     Node n;
     if(fuel < 1) {
-      if(rnd.nextInt(5) == 0) {
+      if(vars.length == 0 || rnd.nextInt(5) == 0) {
           n = new Node(getDoubleStr(), null, null);
       } else {
         n = new Node(choose(vars), null, null);
@@ -86,11 +88,27 @@ public class OperatorTree {
     }
     return n;
   }
+  
+  private String makeDist() {
+	  if (dist != null) {
+		  StringBuilder sb = new StringBuilder();
+		  int minLen = Math.min(dist.length, vars.length);
+		  for (int i = 0; i < minLen; i++) {
+			  sb.append("(" + vars[i] + " (" + dist[i] + ")) ");
+		  }
+		  for (int i = minLen; i < vars.length; i++) {
+			  sb.append(vars[i] + " ");
+		  }
+		  return sb.toString();
+	  } else {
+		  return String.join(" ", vars);
+	  }
+  }
 
   public String toString() {
     return String.format(
         "(herbie-test (%s)\n  %s\n  %s)"
-        , String.join(" ", vars)
+        , String.join(" ", makeDist())
         , name
         , expr.toString());
   }
